@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanzas II - Derivados Financieros</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            text: '#e2e8f0'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos encapsulados para el artefacto */
+        #artefacto-educativo-root {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Scrollbar para mejor estética */
+        #artefacto-educativo-root ::-webkit-scrollbar {
+            width: 8px;
+        }
+        #artefacto-educativo-root ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #artefacto-educativo-root ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark #artefacto-educativo-root ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-dark-text transition-colors duration-300">
+
+<div id="artefacto-educativo-root" class="relative w-full max-w-5xl mx-auto p-4 sm:p-6 lg:p-8 flex flex-col min-h-screen">
+
+    <!-- Header / Nav -->
+    <header class="flex justify-between items-center mb-8 pb-4 border-b border-gray-200 dark:border-gray-700">
+        <div class="flex items-center gap-3">
+            <button onclick="app.navigate('home')" class="p-2 rounded-lg bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-100 hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors" title="Menú Principal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+            </button>
+            <h1 class="text-xl sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-blue-500 dark:from-primary-400 dark:to-blue-300">
+                Finanzas II: Derivados
+            </h1>
+        </div>
+        <button onclick="app.toggleTheme()" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" title="Alternar Modo Oscuro">
+            <!-- Icono Sol (oculto en modo oscuro) -->
+            <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 dark:hidden">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-2.25l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+            </svg>
+            <!-- Icono Luna (oculto en modo claro) -->
+            <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden dark:block">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+            </svg>
+        </button>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main id="main-content" class="flex-grow flex flex-col">
+        <!-- Vistas dinámicas inyectadas aquí -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-8 pt-4 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
+        <p>Autor Sergio Tertusio</p>
+    </footer>
+
+</div>
+
+<script>
+/**
+ * Lógica principal del artefacto (Vanilla JS)
+ */
+const app = {
+    state: {
+        currentView: 'home',
+        theme: 'light',
+        quiz: {
+            currentQuestionIndex: 0,
+            score: 0,
+            answers: [], // Guarda si acertó o no
+            isFinished: false
+        }
+    },
+
+    // 10 Aspectos teóricos esenciales
+    theoryData: [
+        {
+            title: "1. Mercados Derivados y Activo Subyacente",
+            icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>`,
+            content: "Los derivados son instrumentos cuyo valor depende de otro activo llamado 'subyacente' (ej. divisas, tasas, materias primas). Se usan principalmente para <strong>cobertura</strong> (reducir riesgo) o <strong>especulación</strong>. Pueden ser simétricos (futuros, swaps) o asimétricos (opciones)."
+        },
+        {
+            title: "2. Contratos Futuros vs. Forwards",
+            icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>`,
+            content: "Ambos acuerdan la compra/venta a futuro. Los <strong>Futuros</strong> están normalizados, operan en mercados organizados (con cámara de compensación) y tienen liquidez. Los <strong>Forwards</strong> son a medida (OTC), sin cámara garante, asumiendo riesgo de contrapartida."
+        },
+        {
+            title: "3. Opciones: Concepto de Prima",
+            icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+            content: "Una opción otorga un <strong>derecho (no obligación)</strong> de compra o venta a un precio fijo (strike) durante un plazo. Para obtener este derecho, el comprador paga un precio llamado <strong>Prima</strong> al vendedor."
+        },
+        {
+            title: "4. Opción CALL (Compra)",
+            icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>`,
+            content: "Otorga el derecho a <strong>comprar</strong>. Una posición larga en Call es beneficiosa si se espera una <strong>tendencia alcista</strong> (el activo sube de precio). La pérdida máxima para el comprador está limitada a la Prima pagada."
+        },
+        {
+            title: "5. Opción PUT (Venta)",
+            icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>`,
+            content: "Otorga el derecho a <strong>vender</strong>. Una posición larga en Put sirve como cobertura si se espera una <strong>tendencia bajista</strong> (caída de precios). Ganas si el precio de mercado cae por debajo del strike."
+        },
+        {
+            title: "6. Tipos de Opciones por Ejercicio",
+            icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>`,
+            content: "Las opciones <strong>Europeas</strong> solo pueden ejercerse en la fecha exacta de vencimiento. Las opciones <strong>Americanas</strong> pueden ejercerse en cualquier momento hasta el vencimiento (suelen ser más caras por esta flexibilidad)."
+        },
+        {
+            title: "7. Swaps de Tipos de Interés (IRS)",
+            icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>`,
+            content: "Un acuerdo para intercambiar flujos de efectivo. El más común (plain vanilla) intercambia una <strong>tasa fija por una tasa variable</strong>. Se usa para gestionar el riesgo de fluctuación de tasas de interés. Los principales (nocionales) no se intercambian físicamente."
+        },
+        {
+            title: "8. Swaps de Divisas",
+            icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>`,
+            content: "A diferencia de los IRS, en los Currency Swaps <strong>sí se intercambian</strong> los importes principales iniciales en diferentes monedas, se pagan intereses cruzados y al final se devuelve el principal. Útil para obtener financiamiento más barato en moneda extranjera."
+        },
+        {
+            title: "9. Coberturas: Cap y Floor",
+            icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>`,
+            content: "<strong>CAP:</strong> Sucesión de opciones Call que protege a un deudor contra <em>subidas</em> de tipos de interés (techo). <strong>FLOOR:</strong> Sucesión de opciones Put que protege a un inversor contra <em>bajadas</em> de tipos de interés (piso)."
+        },
+        {
+            title: "10. Collar",
+            icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>`,
+            content: "Combinación de opciones (compra de un Cap financiado con la venta de un Floor, o viceversa) que establece una <strong>banda de oscilación</strong> para las tasas de interés. Limita tanto las subidas como las bajadas extremas, reduciendo el costo inicial de la cobertura."
+        }
+    ],
+
+    // Datos del Quiz (10 preguntas)
+    quizData: [
+        {
+            question: "¿Cuál es el objetivo principal de los mercados de derivados?",
+            options: [
+                "Generar ingresos fiscales para el estado.",
+                "Cubrir el riesgo del activo al que hacen referencia (subyacente).",
+                "Fijar precios mínimos para las materias primas agrícolas.",
+                "Eliminar completamente la intervención de los bancos centrales."
+            ],
+            correctIndex: 1,
+            feedbackCorrect: "¡Correcto! Los derivados nacieron fundamentalmente como instrumentos de cobertura de riesgos (de cambio, de interés, de precio) asociados a un activo subyacente.",
+            feedbackIncorrect: "Incorrecto. Aunque tienen usos especulativos, su razón de ser original y principal es la cobertura de riesgos.",
+            rationale: "Según el 'Libro1_Futuros y opciones', en los mercados derivados se busca principalmente cubrir el riesgo del activo de referencia (activo subyacente)."
+        },
+        {
+            question: "¿Qué diferencia clave existe entre un contrato Futuro y un contrato Forward?",
+            options: [
+                "Los Futuros operan en mercados OTC y los Forwards en mercados normalizados.",
+                "Los Forwards no obligan a las partes, los Futuros sí.",
+                "Los Futuros están estandarizados y operan en mercados organizados, los Forwards son a medida en mercados OTC.",
+                "No hay diferencia, son dos nombres para el mismo instrumento financiero."
+            ],
+            correctIndex: 2,
+            feedbackCorrect: "¡Excelente! La estandarización y el mercado donde operan es la distinción fundamental.",
+            feedbackIncorrect: "Incorrecto. Recuerda qué instrumento se diseña 'a medida' y cuál se negocia en bolsas organizadas con cámara de compensación.",
+            rationale: "Los contratos Futuros están normalizados y operan en mercados organizados (con cámara de compensación). Los Forwards no están estandarizados, se adaptan a las necesidades y se negocian en mercados Over The Counter (OTC)."
+        },
+        {
+            question: "En una opción CALL, ¿qué representa tomar una 'posición larga'?",
+            options: [
+                "Cobrar la prima y obligarse a vender el subyacente.",
+                "Pagar la prima y obtener el derecho a vender el subyacente.",
+                "Cobrar la prima y obtener la obligación de comprar el subyacente.",
+                "Pagar la prima y obtener el derecho a comprar el subyacente."
+            ],
+            correctIndex: 3,
+            feedbackCorrect: "¡Muy bien! Una posición larga siempre implica comprar el derecho, en este caso, de compra (Call).",
+            feedbackIncorrect: "No es correcto. 'Largo' significa comprar. 'Call' significa opción de compra.",
+            rationale: "La compra de una opción Call (Call larga) otorga al comprador el derecho (no obligatorio) a comprar un activo subyacente a un precio preestablecido, pagando a cambio una prima."
+        },
+        {
+            question: "Una opción que solo puede ejercerse en su fecha exacta de vencimiento se denomina:",
+            options: [
+                "Opción Europea.",
+                "Opción Americana.",
+                "Opción Asiática.",
+                "Opción Bermudense."
+            ],
+            correctIndex: 0,
+            feedbackCorrect: "¡Correcto! Esta rigidez las diferencia de las americanas.",
+            feedbackIncorrect: "Incorrecto. Revisa la clasificación de opciones según el momento en que se puede ejercer el derecho.",
+            rationale: "Las opciones Europeas se caracterizan por poder ser ejercidas exclusivamente en una fecha determinada (la fecha de vencimiento del contrato)."
+        },
+        {
+            question: "Si posees acciones y temes que su precio de mercado caiga fuertemente, ¿cuál es la estrategia básica de cobertura mediante opciones?",
+            options: [
+                "Vender una opción PUT (Put corta).",
+                "Comprar una opción PUT (Put larga o protectora).",
+                "Comprar una opción CALL (Call larga).",
+                "Vender un contrato Forward."
+            ],
+            correctIndex: 1,
+            feedbackCorrect: "¡Exacto! Esta estrategia se conoce como 'Put Protectora' y funciona como un seguro contra caídas de precio.",
+            feedbackIncorrect: "Incorrecto. Necesitas un instrumento que te otorgue el derecho a vender tus acciones a un precio fijado si el mercado colapsa.",
+            rationale: "La compra de una opción Put (derecho de venta) permite fijar un precio mínimo de venta (strike). Si el mercado cae por debajo de ese precio, ejerces la Put, limitando tus pérdidas al pago de la prima."
+        },
+        {
+            question: "¿Qué es la Cámara de Compensación (Clearing House) en los mercados de futuros?",
+            options: [
+                "Una entidad del gobierno que fija los precios de las materias primas.",
+                "Una institución que actúa como contraparte de todos los agentes, eliminando el riesgo de impago.",
+                "Un sindicato de inversores privados que opera en mercados OTC.",
+                "El lugar físico donde se guardan los activos subyacentes físicos (oro, petróleo)."
+            ],
+            correctIndex: 1,
+            feedbackCorrect: "¡Correcto! Su rol es vital para garantizar la integridad y liquidez de los mercados organizados.",
+            feedbackIncorrect: "Incorrecto. Piensa en el mecanismo que hace que los mercados de futuros sean más seguros que los OTC.",
+            rationale: "La cámara actúa como comprador para todo vendedor y como vendedor para todo comprador, exigiendo garantías diarias (márgenes) y eliminando así el riesgo de contrapartida."
+        },
+        {
+            question: "En un Swap de Tipos de Interés (IRS) 'Plain Vanilla', ¿qué se intercambia típicamente?",
+            options: [
+                "Acciones de diferentes empresas tecnológicas.",
+                "El principal o nocional físico del contrato.",
+                "Obligaciones con tasa fija por obligaciones con tasa variable sobre un mismo nocional.",
+                "Divisas de diferentes países (ej. Euros por Dólares)."
+            ],
+            correctIndex: 2,
+            feedbackCorrect: "¡Muy bien! Este es el uso más común de los IRS para gestionar el riesgo de tasas.",
+            feedbackIncorrect: "Incorrecto. Un IRS ('Interest Rate Swap') gestiona tasas, no divisas ni acciones, y generalmente no intercambia el principal.",
+            rationale: "En un swap convencional de tasas de interés, se intercambian flujos de pago calculados sobre un principal (nocional) que no cambia de manos. Una parte paga fijo y recibe variable, y la otra viceversa."
+        },
+        {
+            question: "¿Qué busca el comprador de un contrato tipo 'CAP'?",
+            options: [
+                "Protegerse de posibles subidas en los tipos de interés.",
+                "Protegerse de posibles caídas en los tipos de interés.",
+                "Asegurar un tipo de cambio fijo para sus exportaciones.",
+                "Especular con la caída del precio de las materias primas."
+            ],
+            correctIndex: 0,
+            feedbackCorrect: "¡Exacto! El CAP actúa como un techo (cap) para el costo de la deuda a tasa variable.",
+            feedbackIncorrect: "Incorrecto. Un CAP es útil para quien tiene deuda, por lo que su temor es que los intereses aumenten.",
+            rationale: "Un Cap es una sucesión de opciones Call sobre tipos de interés. Si la tasa de mercado supera el 'strike' del Cap, el vendedor paga la diferencia al comprador, limitando así el costo máximo de financiamiento."
+        },
+        {
+            question: "Si combinamos la compra de un 'Cap' y la venta de un 'Floor' para abaratar la prima total, estamos estructurando un:",
+            options: [
+                "Swap de Divisas.",
+                "Forward Rate Agreement (FRA).",
+                "Collar.",
+                "Put Sintética."
+            ],
+            correctIndex: 2,
+            feedbackCorrect: "¡Correcto! El Collar crea un túnel o banda de oscilación para las tasas.",
+            feedbackIncorrect: "Incorrecto. Esta combinación específica tiene un nombre que hace referencia a una 'banda' o 'cuello'.",
+            rationale: "Un 'Collar' financia parcial o totalmente la prima de un Cap mediante la venta de un Floor. Esto limita el costo máximo (por el Cap) pero también limita el beneficio de las bajas de interés (por el Floor vendido)."
+        },
+        {
+            question: "En el mercado Forex, la divisa que se encuentra en el numerador (ej. EUR en EUR/USD) se denomina:",
+            options: [
+                "Divisa de cotización.",
+                "Divisa base.",
+                "Divisa flotante.",
+                "Divisa exótica."
+            ],
+            correctIndex: 1,
+            feedbackCorrect: "¡Excelente! Y la segunda es la de cotización.",
+            feedbackIncorrect: "Incorrecto. Revisa la nomenclatura estándar de los pares de divisas.",
+            rationale: "En un par de divisas, la primera moneda (numerador) es la 'divisa base' y su valor es siempre 1. La segunda moneda es la 'divisa de cotización', que indica cuánto de esta se necesita para comprar una unidad de la divisa base."
+        }
+    ],
+
+    // Métodos de navegación
+    navigate: function(viewId) {
+        this.state.currentView = viewId;
+        this.render();
+    },
+
+    toggleTheme: function() {
+        const html = document.documentElement;
+        const iconSun = document.getElementById('theme-icon-sun');
+        const iconMoon = document.getElementById('theme-icon-moon');
+        
+        if (this.state.theme === 'light') {
+            html.classList.add('dark');
+            html.classList.remove('light');
+            this.state.theme = 'dark';
+        } else {
+            html.classList.remove('dark');
+            html.classList.add('light');
+            this.state.theme = 'light';
+        }
+    },
+
+    // Métodos del Quiz
+    startQuiz: function() {
+        // Reinicio de estado
+        this.state.quiz.currentQuestionIndex = 0;
+        this.state.quiz.score = 0;
+        this.state.quiz.answers = [];
+        this.state.quiz.isFinished = false;
+        // Shuffle (opcional, pero pedido)
+        this.quizData = this.shuffleArray([...this.quizData]);
+        this.navigate('quiz');
+    },
+
+    shuffleArray: function(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    },
+
+    selectAnswer: function(optionIndex) {
+        // Prevenir doble click si ya se respondió
+        if (this.state.quiz.answers[this.state.quiz.currentQuestionIndex] !== undefined) return;
+
+        const currentQ = this.quizData[this.state.quiz.currentQuestionIndex];
+        const isCorrect = optionIndex === currentQ.correctIndex;
+
+        if (isCorrect) {
+            this.state.quiz.score++;
+        }
+
+        this.state.quiz.answers[this.state.quiz.currentQuestionIndex] = {
+            selected: optionIndex,
+            isCorrect: isCorrect
+        };
+
+        this.renderQuizView(); // Re-render para mostrar feedback
+    },
+
+    nextQuestion: function() {
+        if (this.state.quiz.currentQuestionIndex < this.quizData.length - 1) {
+            this.state.quiz.currentQuestionIndex++;
+            this.renderQuizView();
+        } else {
+            this.state.quiz.isFinished = true;
+            this.renderQuizResults();
+        }
+    },
+
+    // -----------------------------------------------------
+    // SISTEMA DE RENDERIZADO
+    // -----------------------------------------------------
+    render: function() {
+        const mainContent = document.getElementById('main-content');
+        mainContent.innerHTML = ''; // Limpiar
+
+        if (this.state.currentView === 'home') {
+            mainContent.innerHTML = this.templateHome();
+        } else if (this.state.currentView === 'theory') {
+            mainContent.innerHTML = this.templateTheory();
+        } else if (this.state.currentView === 'quiz') {
+            if (this.state.quiz.isFinished) {
+                mainContent.innerHTML = this.templateQuizResults();
+            } else {
+                mainContent.innerHTML = this.templateQuiz();
+            }
+        }
+    },
+
+    // --- TEMPLATES HTML ---
+    
+    templateHome: function() {
+        return `
+            <div class="flex-grow flex flex-col items-center justify-center text-center fade-in">
+                <div class="max-w-2xl bg-white dark:bg-dark-card rounded-2xl shadow-xl p-8 sm:p-12 border border-gray-100 dark:border-gray-800">
+                    <div class="w-20 h-20 mx-auto bg-primary-100 text-primary-600 dark:bg-primary-900/50 dark:text-primary-400 rounded-full flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-4">Instrumentos Derivados</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+                        Domina los conceptos clave sobre Futuros, Forwards, Opciones y Swaps. Este módulo interactivo combina microaprendizaje teórico con evaluación formativa.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="app.navigate('theory')" class="px-6 py-3 rounded-xl font-semibold text-white bg-primary-600 hover:bg-primary-700 shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                            Aspectos Teóricos
+                        </button>
+                        <button onclick="app.startQuiz()" class="px-6 py-3 rounded-xl font-semibold text-gray-900 bg-white border-2 border-gray-200 hover:border-primary-500 hover:text-primary-600 dark:bg-dark-card dark:text-gray-100 dark:border-gray-600 dark:hover:border-primary-400 dark:hover:text-primary-400 shadow-sm transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                            Quizz Interactivo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    },
+
+    templateTheory: function() {
+        let cardsHtml = this.theoryData.map((item, index) => `
+            <div class="bg-white dark:bg-dark-card rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow">
+                <div class="text-primary-500 dark:text-primary-400 mb-4 bg-primary-50 dark:bg-primary-900/30 inline-block p-3 rounded-lg">
+                    ${item.icon}
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3 leading-tight">${item.title}</h3>
+                <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">${item.content}</p>
+            </div>
+        `).join('');
+
+        return `
+            <div class="fade-in">
+                <div class="mb-8 text-center sm:text-left">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">10 Conceptos Clave</h2>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2">Revisa estos aspectos esenciales antes de poner a prueba tus conocimientos.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    ${cardsHtml}
+                </div>
+                <div class="mt-12 text-center">
+                    <button onclick="app.startQuiz()" class="px-8 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-primary-600 to-blue-500 hover:from-primary-700 hover:to-blue-600 shadow-lg transform hover:-translate-y-1 transition-all">
+                        ¡Ir al Quizz!
+                    </button>
+                </div>
+            </div>
+        `;
+    },
+
+    templateQuiz: function() {
+        const qIndex = this.state.quiz.currentQuestionIndex;
+        const question = this.quizData[qIndex];
+        const answerData = this.state.quiz.answers[qIndex];
+        const isAnswered = answerData !== undefined;
+
+        let optionsHtml = question.options.map((opt, index) => {
+            let btnClass = "w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-center gap-3 ";
+            let iconHtml = `<div class="w-6 h-6 rounded-full border-2 border-gray-300 flex-shrink-0"></div>`; // Default empty circle
+
+            if (!isAnswered) {
+                // Estado Normal
+                btnClass += "border-gray-200 dark:border-gray-700 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 dark:text-gray-200";
+            } else {
+                // Estado Respondido
+                btnClass += "cursor-default ";
+                if (index === question.correctIndex) {
+                    // Es la correcta
+                    btnClass += "border-green-500 bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200 font-medium";
+                    iconHtml = `<svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+                } else if (index === answerData.selected) {
+                    // Seleccionada pero incorrecta
+                    btnClass += "border-red-500 bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200";
+                    iconHtml = `<svg class="w-6 h-6 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+                } else {
+                    // Otras opciones
+                    btnClass += "border-gray-200 dark:border-gray-700 opacity-50 dark:text-gray-400";
+                }
+            }
+
+            return `
+                <button onclick="app.selectAnswer(${index})" class="${btnClass}" ${isAnswered ? 'disabled' : ''}>
+                    ${iconHtml}
+                    <span class="flex-grow">${opt}</span>
+                </button>
+            `;
+        }).join('');
+
+        let feedbackHtml = '';
+        if (isAnswered) {
+            const feedbackColor = answerData.isCorrect ? 'bg-green-100 border-green-300 text-green-800 dark:bg-green-900/40 dark:border-green-800 dark:text-green-200' : 'bg-red-100 border-red-300 text-red-800 dark:bg-red-900/40 dark:border-red-800 dark:text-red-200';
+            const feedbackText = answerData.isCorrect ? question.feedbackCorrect : question.feedbackIncorrect;
+            
+            feedbackHtml = `
+                <div class="mt-6 p-5 rounded-xl border ${feedbackColor} animate-[fadeIn_0.3s_ease-out]">
+                    <p class="font-bold mb-2 flex items-center gap-2">
+                        ${answerData.isCorrect ? '✓ Respuesta Correcta' : '✗ Respuesta Incorrecta'}
+                    </p>
+                    <p class="mb-3 text-sm sm:text-base">${feedbackText}</p>
+                    <div class="mt-4 pt-4 border-t border-current opacity-80 text-sm">
+                        <p class="font-semibold mb-1 flex items-center gap-1">
+                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                           Fundamentación Técnica:
+                        </p>
+                        <p>${question.rationale}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Progress bar
+        const progressPercent = ((qIndex) / this.quizData.length) * 100;
+
+        return `
+            <div class="max-w-3xl mx-auto w-full fade-in pb-12">
+                <!-- Header Quizz -->
+                <div class="flex justify-between items-end mb-2">
+                    <span class="text-sm font-semibold text-gray-500 dark:text-gray-400">Pregunta ${qIndex + 1} de ${this.quizData.length}</span>
+                    <span class="text-sm font-bold text-primary-600 dark:text-primary-400">Puntaje: ${this.state.quiz.score}</span>
+                </div>
+                <!-- Barra Progreso -->
+                <div class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full mb-8 overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-primary-500 to-blue-500 transition-all duration-300" style="width: ${progressPercent}%"></div>
+                </div>
+
+                <!-- Pregunta -->
+                <div class="bg-white dark:bg-dark-card rounded-2xl p-6 sm:p-8 shadow-md border border-gray-100 dark:border-gray-800">
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-6">${question.question}</h3>
+                    
+                    <div class="flex flex-col gap-3">
+                        ${optionsHtml}
+                    </div>
+
+                    ${feedbackHtml}
+
+                    <div class="mt-8 flex justify-end">
+                        <button onclick="app.nextQuestion()" class="px-6 py-2 rounded-lg font-bold text-white bg-gray-800 hover:bg-gray-900 dark:bg-primary-600 dark:hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" ${!isAnswered ? 'disabled' : ''}>
+                            ${qIndex === this.quizData.length - 1 ? 'Finalizar Quizz' : 'Siguiente Pregunta ➔'}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    },
+
+    templateQuizResults: function() {
+        const total = this.quizData.length;
+        const score = this.state.quiz.score;
+        const percentage = Math.round((score / total) * 100);
+        
+        let message = "";
+        let colorClass = "";
+        
+        if (percentage >= 90) {
+            message = "¡Excelente! Nivel Experto en Derivados.";
+            colorClass = "text-green-500";
+        } else if (percentage >= 70) {
+            message = "¡Muy bien! Tienes un buen dominio de los conceptos.";
+            colorClass = "text-blue-500";
+        } else if (percentage >= 50) {
+            message = "Aprobado. Te sugerimos repasar algunos aspectos teóricos.";
+            colorClass = "text-yellow-500";
+        } else {
+            message = "Necesitas repasar. Vuelve a la sección teórica e inténtalo de nuevo.";
+            colorClass = "text-red-500";
+        }
+
+        return `
+            <div class="flex-grow flex flex-col items-center justify-center text-center fade-in">
+                <div class="max-w-xl w-full bg-white dark:bg-dark-card rounded-2xl shadow-xl p-8 sm:p-12 border border-gray-100 dark:border-gray-800">
+                    
+                    <div class="relative w-32 h-32 mx-auto mb-6">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                            <path class="text-gray-200 dark:text-gray-700" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path class="${colorClass} transition-all duration-1000 ease-out" stroke-dasharray="${percentage}, 100" stroke-width="3" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center flex-col">
+                            <span class="text-3xl font-bold ${colorClass}">${percentage}%</span>
+                        </div>
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Resultados Finales</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-2">Acertaste <strong>${score}</strong> de <strong>${total}</strong> preguntas.</p>
+                    <p class="font-medium ${colorClass} mb-8">${message}</p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="app.startQuiz()" class="px-6 py-2 rounded-xl font-semibold text-white bg-primary-600 hover:bg-primary-700 transition-colors flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                            Reintentar Quizz
+                        </button>
+                        <button onclick="app.navigate('theory')" class="px-6 py-2 rounded-xl font-semibold text-primary-700 bg-primary-100 hover:bg-primary-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors">
+                            Repasar Teoría
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    },
+
+    // Auxiliar para re-renderizar solo la vista de quiz sin parpadeos drásticos
+    renderQuizView: function() {
+        const mainContent = document.getElementById('main-content');
+        if(this.state.currentView === 'quiz' && !this.state.quiz.isFinished) {
+            mainContent.innerHTML = this.templateQuiz();
+        }
+    }
+};
+
+// Inicialización
+window.onload = () => {
+    // Detectar preferencia de tema del sistema
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        app.state.theme = 'light'; // Forzamos light para que el toggle lo cambie a dark correctamente inicializando UI
+        app.toggleTheme();
+    }
+    app.render();
+};
+</script>
+</body>
+</html>
