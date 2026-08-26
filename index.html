@@ -138,37 +138,37 @@ const app = {
         {
             title: "4. Opción CALL (Compra)",
             icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>`,
-            content: "Otorga el derecho a <strong>comprar</strong>. Una posición larga en Call es beneficiosa si se espera una <strong>tendencia alcista</strong> (el activo sube de precio). La pérdida máxima para el comprador está limitada a la Prima pagada."
+            content: "Otorga el derecho a <strong>comprar</strong>. Beneficioso si se espera una <strong>tendencia alcista</strong>. <br><br><strong>Ejemplo Real:</strong> Imagina que acciones de la empresa 'XYZ' cotizan a 190 USD y sabes que lanzarán un producto exitoso. Compras opciones CALL a 200 USD (strike) a 3 meses, pagando una prima de 10 USD. Si al final las acciones suben a 220 USD, ejerces tu opción: compras a 200 USD, vendes en mercado a 220 USD, ganando 10 USD netos (20 de ganancia - 10 de prima)."
         },
         {
             title: "5. Opción PUT (Venta)",
             icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>`,
-            content: "Otorga el derecho a <strong>vender</strong>. Una posición larga en Put sirve como cobertura si se espera una <strong>tendencia bajista</strong> (caída de precios). Ganas si el precio de mercado cae por debajo del strike."
+            content: "Otorga el derecho a <strong>vender</strong>. Sirve como cobertura si se espera una <strong>tendencia bajista</strong>. <br><br><strong>Ejemplo Real:</strong> Eres dueño de acciones de 'Speedy Truck SA' y temes que su precio caiga. Compras una PUT (Put protectora) con un strike de 20 USD pagando 3 USD de prima. Si la acción se desploma a 10 USD, ejerces tu derecho y vendes a 20 USD, limitando tu pérdida solo al pago de la prima (3 USD)."
         },
         {
             title: "6. Tipos de Opciones por Ejercicio",
             icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>`,
-            content: "Las opciones <strong>Europeas</strong> solo pueden ejercerse en la fecha exacta de vencimiento. Las opciones <strong>Americanas</strong> pueden ejercerse en cualquier momento hasta el vencimiento (suelen ser más caras por esta flexibilidad)."
+            content: "Las opciones <strong>Europeas</strong> solo pueden ejercerse en la fecha exacta de vencimiento. Las opciones <strong>Americanas</strong> pueden ejercerse en cualquier momento hasta el vencimiento. Al ofrecer mayor flexibilidad, las americanas suelen tener una prima más cara."
         },
         {
             title: "7. Swaps de Tipos de Interés (IRS)",
             icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>`,
-            content: "Un acuerdo para intercambiar flujos de efectivo. El más común (plain vanilla) intercambia una <strong>tasa fija por una tasa variable</strong>. Se usa para gestionar el riesgo de fluctuación de tasas de interés. Los principales (nocionales) no se intercambian físicamente."
+            content: "Acuerdo para intercambiar flujos de efectivo. El 'plain vanilla' intercambia una <strong>tasa fija por una variable</strong>.<br><br><strong>Ejemplo Real:</strong> Participante A paga un 5% fijo trimestral sobre 50,000 USD. Participante B paga una tasa variable (Libor) sobre el mismo monto. Si la tasa variable sube al 5.50%, A recibe 250 USD netos de B. Si baja al 4.50%, A debe pagar 250 USD a B."
         },
         {
             title: "8. Swaps de Divisas",
             icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>`,
-            content: "A diferencia de los IRS, en los Currency Swaps <strong>sí se intercambian</strong> los importes principales iniciales en diferentes monedas, se pagan intereses cruzados y al final se devuelve el principal. Útil para obtener financiamiento más barato en moneda extranjera."
+            content: "Aquí <strong>sí se intercambian</strong> importes principales iniciales en diferentes monedas.<br><br><strong>Ejemplo Real:</strong> Una empresa de EE.UU. necesita euros y una alemana necesita dólares. La alemana presta 50 millones de euros (a tasa de ej. 6M-Libor+50pb) y la de EE.UU. presta 100 millones de USD (a 6% fijo). Intercambian principales, pagan intereses cruzados periódicamente, y al final (ej. 5 años) devuelven los principales originales."
         },
         {
             title: "9. Coberturas: Cap y Floor",
             icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>`,
-            content: "<strong>CAP:</strong> Sucesión de opciones Call que protege a un deudor contra <em>subidas</em> de tipos de interés (techo). <strong>FLOOR:</strong> Sucesión de opciones Put que protege a un inversor contra <em>bajadas</em> de tipos de interés (piso)."
+            content: "<strong>CAP (Techo):</strong> Sucesión de Calls. Protege contra <em>subidas</em> de interés. Ej: Si tienes un préstamo variable y compras un Cap al 5%, si el mercado sube al 5.20%, el vendedor te paga esa diferencia.<br><br><strong>FLOOR (Piso):</strong> Sucesión de Puts. Protege contra <em>bajadas</em>. Ej: Si tienes una inversión y compras un Floor al 5%, si el mercado cae al 4%, te pagan la diferencia, asegurando tu rentabilidad mínima."
         },
         {
             title: "10. Collar",
             icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>`,
-            content: "Combinación de opciones (compra de un Cap financiado con la venta de un Floor, o viceversa) que establece una <strong>banda de oscilación</strong> para las tasas de interés. Limita tanto las subidas como las bajadas extremas, reduciendo el costo inicial de la cobertura."
+            content: "Combinación para abaratar costos: comprar un Cap y vender un Floor (o viceversa) creando una <strong>banda de oscilación</strong>.<br><br><strong>Ejemplo Real:</strong> Dejas fluctuar los intereses entre 2% y 6%. Compras un Cap al 6% (te protege de subidas extremas) y lo financias vendiendo un Floor al 2%. Pierdes el beneficio si las tasas bajan del 2%, pero te aseguras de no pagar más del 6%, a menudo logrando un 'costo cero' inicial."
         }
     ],
 
